@@ -26,7 +26,13 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@app/*": ["./src/app/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@server/*": ["./src/server/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": [
