@@ -1,6 +1,6 @@
 import { db } from "../../server";
 import { mockFolders, mockFiles } from "../../lib/mock-data";
-import { folders, files } from "../../server/db/schema";
+import { folder_table, file_table } from "../../server/db/schema";
 
 export default function SandboxPage() {
     return (
@@ -34,12 +34,12 @@ export default function SandboxPage() {
                 // await db.delete(files)
                 // await db.delete(folders)
                 
-                await db.insert(folders).values(mockFolders.map((folder, index) => ({
+                await db.insert(folder_table).values(mockFolders.map((folder, index) => ({
                     id: index + 1,
                     name: folder.name,
                     parent: index !== 0 ? index : null,
                 })))
-                await db.insert(files).values(mockFiles.map((file, index) => ({
+                await db.insert(file_table).values(mockFiles.map((file, index) => ({
                     id: index + 1,
                     name: file.name,
                     size: parseInt(file.size),
