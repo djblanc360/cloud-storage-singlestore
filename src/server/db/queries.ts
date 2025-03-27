@@ -1,8 +1,14 @@
 import "server-only";
 
 import { db } from "../index";
-import { folder_table as foldersSchema, file_table as filesSchema } from "./schema";
+import { 
+  folder_table as foldersSchema, 
+  file_table as filesSchema,
+  DB_FileType,
+  DB_FolderType
+} from "./schema";
 import { eq } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
 
 export const QUERIES = {
   getAllParentsForFolder: async function (folderId: number) {
@@ -37,3 +43,38 @@ export const QUERIES = {
 
 }
 
+export const MUTATIONS = {
+  createFile: async function (input: {
+    file : {
+      name: string;
+      size: number;
+      url: string;
+      parent: number;
+    };
+    userId: string;
+  }) {
+    console.log("=== Database Debug Logs ===");
+    console.log("1. Input received:", input);
+    
+    try {
+      console.log("2. Preparing database insert...");
+      const values = {
+        ...input.file,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      console.log("3. Values to insert:", values);
+      
+      const result = await db.insert(filesSchema).values(values);
+      console.log("4. Insert result:", result);
+      
+      return result;
+    } catch (error) {
+      console.error("=== Database Error Details ===");
+      console.error("Error type:", error?.constructor?.name);
+      console.error("Error message:", error instanceof Error ? error.message : "Unknown error");
+      console.error("Error stack:", error instanceof Error ? error.stack : "No stack trace");
+      throw error;
+    }
+  }
+}
