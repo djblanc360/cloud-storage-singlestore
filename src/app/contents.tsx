@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button"
 import { FileRow, FolderRow } from "./FileRow"
 import type { file_table, folder_table } from "~/server/db/schema"
 import Link from "next/link"
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs"
 
 export default function Contents(props: {
   files: typeof file_table.$inferSelect[];
@@ -41,10 +42,15 @@ export default function Contents(props: {
               </div>
             ))}
           </div>
-          <Button onClick={handleUpload} className="bg-blue-600 text-white hover:bg-blue-700">
-            <Upload className="mr-2" size={20} />
-            Upload
-          </Button>
+          <div>
+            <SignedOut>
+              <SignInButton />
+              {/* <SignUpButton /> */}
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
         </div>
         <div className="bg-gray-800 rounded-lg shadow-xl">
           <div className="px-6 py-4 border-b border-gray-700">
