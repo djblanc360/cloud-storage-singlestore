@@ -16,6 +16,8 @@ export default function Contents(props: {
   files: typeof file_table.$inferSelect[];
   folders: typeof folder_table.$inferSelect[];
   parents: typeof folder_table.$inferSelect[];
+  
+  currentFolderId: number;
 }) {
   const navigate = useRouter();
 
@@ -70,12 +72,19 @@ export default function Contents(props: {
           </ul>
         </div>
         <SignedIn>
-          <UploadButton endpoint="imageUploader" onClientUploadComplete={() => {
-            navigate.refresh();
-          }} onUploadError={(error) => {
-            // console.log(error);
-            alert("Upload error")
-          }} />
+          <UploadButton 
+            endpoint="imageUploader" 
+            onClientUploadComplete={() => {
+              navigate.refresh();
+            }} 
+            onUploadError={(error) => {
+              // console.log(error);
+              alert("Upload error")
+            }} 
+            input={{
+              folderId: props.currentFolderId
+            }}
+          />
         </SignedIn>
       </div>
     </div>

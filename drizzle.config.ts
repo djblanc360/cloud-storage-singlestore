@@ -4,7 +4,7 @@ import { env } from "~/env";
 export default defineConfig({
   schema: "./src/server/db/schema.ts",
   dialect: "singlestore",
-  tablesFilter: ["cloud-storage_*"],
+  tablesFilter: ["cloud_storage_*"],
   dbCredentials: {
     host: env.SINGLESTORE_HOST,
     user: env.SINGLESTORE_USER,

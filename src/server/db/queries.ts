@@ -34,6 +34,18 @@ export const QUERIES = {
           .where(eq(foldersSchema.parent, folderId))
   },
 
+  getFolderById: async function (folderId: number) {
+    const folder = await db
+    .select()
+    .from(foldersSchema)
+    .where(eq(foldersSchema.id, folderId));
+
+    if (!folder[0]) {
+      throw new Error("Folder not found");
+    }
+    return folder[0];
+  },
+
   getFiles: function (folderId: number) {
       return db
           .select()
@@ -55,7 +67,7 @@ export const MUTATIONS = {
   }) {
     return await db.insert(filesSchema).values({
       ...input.file,
-      parent: input.file.parent,
+      ownerId: input.userId,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
