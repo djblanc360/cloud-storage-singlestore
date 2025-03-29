@@ -10,7 +10,6 @@ import Link from "next/link"
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs"
 import { UploadButton } from "~/components/uploadthing"
 import { useRouter } from "next/navigation";
-import { error } from "console"
 
 export default function Contents(props: {
   files: typeof file_table.$inferSelect[];
