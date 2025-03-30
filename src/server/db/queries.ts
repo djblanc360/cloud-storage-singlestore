@@ -32,6 +32,15 @@ export const QUERIES = {
           .select()
           .from(foldersSchema)
           .where(eq(foldersSchema.parent, folderId))
+          .orderBy(filesSchema.id)
+  },
+
+  getFiles: function (folderId: number) {
+      return db
+          .select()
+          .from(filesSchema)
+          .where(eq(filesSchema.parent, folderId))
+          .orderBy(filesSchema.id)
   },
 
   getFolderById: async function (folderId: number) {
@@ -45,13 +54,6 @@ export const QUERIES = {
     }
     return folder[0];
   },
-
-  getFiles: function (folderId: number) {
-      return db
-          .select()
-          .from(filesSchema)
-          .where(eq(filesSchema.parent, folderId))
-  }
 
 }
 
