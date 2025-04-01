@@ -7,7 +7,7 @@ import {
   DB_FileType,
   DB_FolderType
 } from "./schema";
-import { eq } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 
 export const QUERIES = {
@@ -54,6 +54,21 @@ export const QUERIES = {
     }
     return folder[0];
   },
+
+  getUserRootFolder: async function (userId: string) {
+    const rootFolder = await db
+    .select()
+    .from(foldersSchema)
+    .where(
+      and(eq(foldersSchema.ownerId, userId), isNull(foldersSchema.parent)
+    ))
+    .orderBy(foldersSchema.id);
+
+    if (!rootFolder[0]) {
+      throw new Error("Root folder not found");
+    }
+    return rootFolder[0];
+  }
 
 }
 
