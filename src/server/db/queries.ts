@@ -86,7 +86,44 @@ export const MUTATIONS = {
       ...input.file,
       ownerId: input.userId,
       createdAt: new Date(),
-      updatedAt: new Date(),
+      updatedAt: new Date(),  
     });
+  },
+
+  onboardUser: async function (userId: string) {
+    const rootFolder = await db.insert(foldersSchema).values({
+      name: "Root",
+      ownerId: userId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }).$returningId(); // returns the id of the inserted folder
+
+    const rootFolderId = rootFolder[0]!.id;
+
+    await db.insert(foldersSchema).values([
+      {
+        name: "Trash",
+        ownerId: userId,
+        parent: rootFolderId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: "Shared",
+        ownerId: userId,
+        parent: rootFolderId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: "Documents",
+        ownerId: userId,
+        parent: rootFolderId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    ]);
+
+    return rootFolderId;
   }
 }

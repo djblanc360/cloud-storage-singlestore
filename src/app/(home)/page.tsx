@@ -4,15 +4,14 @@ import { Button } from "~/components/ui/button";
 
 export default async function Drive() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 p-6 text-center text-gray-100">
-      <div className="max-w-3xl">
-        <h1 className="mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
-          Cloud Drive
-        </h1>
-        <p className="mx-auto mb-10 max-w-md text-xl text-gray-300 md:text-2xl">
-          Secure, fast, and easy file storage. A graveyard for past proects.
-        </p>
-        <form
+    <>
+      <h1 className="mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+        Cloud Drive
+      </h1>
+      <p className="mx-auto mb-10 max-w-md text-xl text-gray-300 md:text-2xl">
+        Secure, fast, and easy file storage. A graveyard for past proects.
+      </p>
+      <form
           action={async () => {
             "use server";
 
@@ -32,11 +31,7 @@ export default async function Drive() {
           >
             Get Started
           </Button>
-        </form>
-        <footer className="mt-16 text-sm text-gray-400">
-          © {new Date().getFullYear()} djblanc360. All rights reserved.
-        </footer>
-      </div>
-    </div>
+      </form>
+    </>
   );
 }
