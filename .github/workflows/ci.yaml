@@ -1,0 +1,29 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout # offical github action
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Copy .env.example files # needed otherwise the build will fail cause of missing .env file
+        shell: pwsh
+        run: Get-ChildItem -Recurse -Filter ".env.example" | ForEach-Object { Copy-Item $_.FullName ($_.FullName -replace '\.example$','') }
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
